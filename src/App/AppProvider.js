@@ -2,7 +2,6 @@ import React,{Component, createContext} from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import './styles.css'
-import { Route, Switch } from "react-router-dom";
 
 
 
@@ -129,12 +128,13 @@ export class AppProvider extends Component{
   }
 
   fetchNavStats = async() =>{
-    const navStatsURL =  "http://localhost:43716/api/calculationservice?FundId="+this.state.uniqueId+"&StatName=One Day Returns";
+    const navStatsURL =  "http://localhost:43716/api/calculationservice?FundId="+this.state.uniqueId+"&StatName=OneDayReturns";
     let oneMonthArrayStats =[];
     let oneMonthDateArray=[];
     await axios.get(navStatsURL).then((response)=>{
       let navStatsList = response.data;
       this.setState({navStatsList});
+      console.log(navStatsList);
       for(var i =this.state.buttonLimit; i>=0;i--){
         oneMonthArrayStats.push(navStatsList['timeSeriesList'][i].stats.nav);
         oneMonthDateArray.push(navStatsList['timeSeriesList'][i].date);

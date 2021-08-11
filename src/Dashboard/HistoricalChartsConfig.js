@@ -32,10 +32,7 @@ export default function HistoricalChartsConfig(dateArray,historicalArray){
       },
     
       legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle'
-      },
+        enabled:false      },
     
       plotOptions: {
         series: {
@@ -47,8 +44,7 @@ export default function HistoricalChartsConfig(dateArray,historicalArray){
     
       series: [{
         name: 'Historical Cumulative Returns',
-        data: historicalArray,
-        color:'green'
+        data: historicalArray
       
       }],
     

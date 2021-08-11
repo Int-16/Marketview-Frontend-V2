@@ -10,7 +10,8 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import NavChart from './NavChart'
-import Button from '@material-ui/core/Button'
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,12 +21,20 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 14,
         fontWeight:"bold",
       },
+      Toggle:{
+          color:"black"
+      }
       
 }));
 
 
 export default function MainGrid(){
     const classes = useStyles();
+    const [active, setActive] = React.useState('1M');
+
+  const handleActiveState = (event,newValue) => {
+    setActive(newValue);
+  };
     return(
         <AppContext.Consumer>
             {
@@ -41,18 +50,25 @@ export default function MainGrid(){
                             <Typography className={classes.title} color="black" gutterBottom>
                                        NAV Returns 
                             </Typography>
-                            <Button onClick={()=>setButtonLimit(22)} variant="contained" color="default">
-                                1M
-                            </Button>
-                            <Button onClick={()=>setButtonLimit(66)} variant="contained" color="default">
-                                3M
-                            </Button>
-                            <Button onClick={()=>setButtonLimit(132)} variant="contained" color="default">
-                                6M
-                            </Button>
-                            <Button onClick={()=>setButtonLimit(252)} variant="contained" color="default">
-                                1Y
-                            </Button>
+                            <ToggleButtonGroup
+                                value={active}
+                                exclusive
+                                onChange={handleActiveState}
+                            >
+                                <ToggleButton className={classes.Toggle} onClick={()=>setButtonLimit(22)} value="1M">
+                                    1M
+                                </ToggleButton>
+                                <ToggleButton className={classes.Toggle} onClick={()=>setButtonLimit(66)} value="3M">
+                                    3M
+                                </ToggleButton>
+                                <ToggleButton  className={classes.Toggle} onClick={()=>setButtonLimit(132)}  value="6M">
+                                    6M
+                                </ToggleButton>
+                                <ToggleButton className={classes.Toggle} onClick={()=>setButtonLimit(252)} value="1Y">
+                                    1Y
+                                </ToggleButton>
+                            </ToggleButtonGroup>
+                           
                             <NavChart/>
                         </CardContent>
                     </Card>
