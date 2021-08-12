@@ -34,10 +34,11 @@ const useStyles = makeStyles({
     }
   });
 
-function clickFundHandler(fundKey,addFund,confirmFavorites){
+function clickFundHandler(fundKey,addFund,confirmFavorites,fundId,setUniqueId){
     return () => {
         addFund(fundKey);
         confirmFavorites();
+        setUniqueId(fundId);
     } 
 }
 
@@ -46,14 +47,15 @@ export default function FundTile({fundKey}){
     const classes = useStyles();
     return <AppContext.Consumer>
         {
-            ({fundList,addFund,isInFavorites,confirmFavorites}) =>{
+            ({fundList,addFund,isInFavorites,confirmFavorites,setUniqueId}) =>{
                 let fund = fundList[fundKey];
+                let fundId = fund['id'];
                 let TileClass = SelectableTile;
                 if(isInFavorites(fundKey)){
                     TileClass = DisabledTile;
                 }
 
-                 return <TileClass onClick={clickFundHandler(fundKey,addFund,confirmFavorites)}>
+                 return <TileClass onClick={clickFundHandler(fundKey,addFund,confirmFavorites,fundId,setUniqueId)}>
                             <div class="col s12 m12">
                                 <Card className={classes.root}>
                                     <CardContent>

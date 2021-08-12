@@ -1,4 +1,3 @@
-import { green } from "@material-ui/core/colors";
 
 export default function NavChartConfig(oneMonthArrayStats,oneMonthDateArray){
     //console.log(historicalArr);

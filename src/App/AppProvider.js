@@ -20,13 +20,13 @@ export class AppProvider extends Component{
           page:"Funds",
           favorites:[0],
           uniqueId:sessionStorage.getItem('uniqueId') ? sessionStorage.getItem('uniqueId'):"60ebf7813f62675e20176661",
+          setUniqueId:this.setUniqueId,
           setPage:this.setPage,
           ...this.savedSettings(),
           addFund:this.addFund,
           isInFavorites:this.isInFavorites,
           confirmFavorites:this.confirmFavorites,
           setFilteredFunds:this.setFilteredFunds,
-          addId:this.addId,
           limit:4,
           buttonLimit:22,
           setButtonLimit:this.setButtonLimit,
@@ -105,7 +105,7 @@ export class AppProvider extends Component{
       await axios.get(HistURL).then((response)=>{
           let historicalList = response.data;
           this.setState({historicalList});
-          console.log(historicalList);
+          //console.log(historicalList);
 
           for(var i=0;i<historicalList['timeSeriesList'].length;i++){
             if((historicalList['timeSeriesList'][i].stats.HistoricalCumulativeReturns) !== undefined && (historicalList['timeSeriesList'][i].stats.HistoricalCumulativeReturns) != null)
@@ -134,7 +134,7 @@ export class AppProvider extends Component{
     await axios.get(navStatsURL).then((response)=>{
       let navStatsList = response.data;
       this.setState({navStatsList});
-      console.log(navStatsList);
+      //console.log(navStatsList);
       for(var i =this.state.buttonLimit; i>=0;i--){
         oneMonthArrayStats.push(navStatsList['timeSeriesList'][i].stats.nav);
         oneMonthDateArray.push(navStatsList['timeSeriesList'][i].date);
@@ -144,22 +144,14 @@ export class AppProvider extends Component{
     })
   }
 
-  addId = key => {
-    let identity = this.state.fundList[key];
-    let uniqueId =[];
-    uniqueId.push((Object.values(identity)[0]).toString());
-    //console.log('uniqueId '+ uniqueId);
-    this.setState({uniqueId});
-    this.state['uniqueId']=(Object.values(identity)[0]).toString();
-    }
+  setUniqueId = uniqueId => this.setState({uniqueId});
+
 
   addFund = key => {
       let favorites = [];
       if(favorites.length < MAX_FAVORITES){
           favorites.push(key);
           this.setState({favorites});
-          this.addId(key);
-          
       }
       
   }
